@@ -27,15 +27,39 @@
       <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
     </ul>
+    <ul v-for="port in ports" :key="port">
+        <li>{{ port }}</li>
+    </ul>    
   </div>
 </template>
 
 <script>
+import SerialPort from 'serialport'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
-  }
+  },
+  data() {
+    return {
+    }
+  },
+  computed: {
+    ports() {
+      return this.getPorts();
+    }
+
+  },
+  methods: {
+   async getPorts() {
+     let ports = await SerialPort.list();
+     console.log(ports);
+     return ports;
+
+    }
+  },
+
 }
 </script>
 
